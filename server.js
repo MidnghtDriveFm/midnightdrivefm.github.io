@@ -23,7 +23,7 @@ const server = http.createServer((req, res) => {
 });
 
 const wss = new WebSocketServer({ server });
-const tiktok = new TikTokLiveConnection(username);
+const tiktok = new TikTokLiveConnection(username, { processInitialData: false });
 
 tiktok.on('chat', data => {
   const command = String(data.comment || '')
