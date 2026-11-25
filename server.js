@@ -26,6 +26,8 @@ const wss = new WebSocketServer({ server });
 const tiktok = new TikTokLiveConnection(username, { processInitialData: false });
 
 tiktok.on('chat', data => {
+    console.log('CHAT RECEIVED:', data.comment);
+  console.log('GAME CLIENTS:', wss.clients.size);
   const command = String(data.comment || '')
     .trim().toLowerCase();
 
