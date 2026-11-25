@@ -20,4 +20,34 @@ window.liveCommand = function(comment) {
     case 'right': $('steerR').click(); break;
   }
 };
+function connectLive() {
+  const socket = new WebSocket(
+    'wss://midnight-drive-live.onrender.com'
+  );
+
+  socket.onopen = () => {
+    console.log('LIVE server connected');
+  };
+
+  socket.onmessage = (event) => {
+    try {
+      const data = JSON.parse(event.data);
+      if (typeof data.command === 'string') {
+        window.liveCommand(data.command);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  socket.onclose = () => {
+    setTimeout(connectLive, 5000);
+  };
+
+  socket.onerror = () => {
+    socket.close();
+  };
+}
+
+connectLive();
 </script></body></html>
