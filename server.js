@@ -48,7 +48,7 @@ tiktok.on('disconnected', () => {
 });
 
 tiktok.on('error', err => {
-  console.log('TikTok error:', err.message);
+console.log('TikTok error:', err?.message ?? err?.exception?.message ?? err?.info ?? 'Unknown error');
 });
 
 async function connectTikTok() {
@@ -72,4 +72,4 @@ server.listen(process.env.PORT || 3000, '0.0.0.0', () => {
   connectTikTok();
 });
 
-setInterval(connectTikTok, 60000);
+setInterval(connectTikTok, 30000);
